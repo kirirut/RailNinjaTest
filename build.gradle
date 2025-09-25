@@ -34,8 +34,19 @@ dependencies {
     // Logback — реализация SLF4J
     implementation 'ch.qos.logback:logback-classic:1.4.14'
 
+    // Allure Spock adapter
+    testImplementation(platform("io.qameta.allure:allure-bom:2.24.0"))
+    testImplementation("io.qameta.allure:allure-spock2")
+    testImplementation("io.qameta.allure:allure-junit-platform")
+
+    // Spock framework
+    testImplementation(platform("org.spockframework:spock-bom:2.3-groovy-4.0"))
+    testImplementation("org.spockframework:spock-core")
+
 }
 
 tasks.test {
-    useJUnitPlatform() // обязательно для JUnit 5 + Cucumber
+    useJUnitPlatform() // Обязательно для JUnit 5 + Cucumber
+    systemProperty("cucumber.features", "src/test/java/ui/resources") // Путь к директории с feature-файлами
+    systemProperty("cucumber.glue", "ui.StepMethods") // Пакет с шаговыми определениями
 }

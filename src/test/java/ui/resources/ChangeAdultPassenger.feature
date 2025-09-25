@@ -13,21 +13,3 @@ Feature: Changing data on Rail Ninja
       | display_name |
       | Vadim        |
       | Anna         |
-      | Dmitry       |
-      | Elena        |
-      | Alexey       |
-      | Maria        |
-      | Sergey       |
-      | Olga         |
-      | Nikolay      |
-      | Tatiana      |
-      | Ivan         |
-      | Ekaterina    |
-      | Mikhail      |
-      | Yulia        |
-      | Andrey       |
-      | Svetlana     |
-      | Viktor       |
-      | Natalia      |
-      | Pavel        |
-      | Irina        |
