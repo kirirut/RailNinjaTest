@@ -3,6 +3,7 @@ Feature: Changing data on Rail Ninja
     Given I'm on Rail Ninja web page
     And I choose route
     And I choose date
+    And I click Search trains
     And I choose first train
     And I choose flexible
     And I click continue

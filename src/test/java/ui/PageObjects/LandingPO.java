@@ -1,6 +1,7 @@
 package ui.PageObjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
@@ -34,6 +35,10 @@ public class LandingPO {
     @FindBy(how = How.XPATH, using = "//button[contains(@class, 'next')]")
     public WebElement nextMonthButton;
 
+    @FindBy(css = "button[form='search-form-rn-modern'][type='submit']")
+    public WebElement SearchTrainButton;
+
+
 
 
     public void openRailwayNinjaWebPage() {
@@ -46,11 +51,34 @@ public class LandingPO {
     public void enterMecca() {
         wait.until(ExpectedConditions.visibilityOf(departureStationInput)).clear();
         departureStationInput.sendKeys("Mecca");
+
+        WebElement suggestion = wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector(".ant-select-item-option")));
+        suggestion.click();
     }
+
     public void enterMedina() {
-        wait.until(ExpectedConditions.visibilityOf(arrivalStationInput)).clear();
-        arrivalStationInput.sendKeys("Medina");
+        // Кликаем в поле и очищаем
+        WebElement arrival = wait.until(ExpectedConditions.elementToBeClickable(arrivalStationInput));
+        arrival.click();
+        arrival.clear();
+        arrival.sendKeys("Medina");
+
+        // Ждём появления дропдауна
+        WebElement dropdown = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden)")));
+
+        // Ждём появления хотя бы одной подсказки в дропдауне
+        List<WebElement> suggestions = wait.until(ExpectedConditions
+                .presenceOfAllElementsLocatedBy(By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option")));
+
+        // Берём первую подсказку
+        WebElement firstSuggestion = wait.until(ExpectedConditions.elementToBeClickable(suggestions.get(0)));
+
+        // Кликаем через JS (чтобы исключить перехват клика другими элементами)
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", firstSuggestion);
     }
+
 
     public void clickCalendarIcon() {
         wait.until(ExpectedConditions.elementToBeClickable(calendarIcon)).click();
@@ -84,8 +112,7 @@ public class LandingPO {
             }
         }
     }
-
-
-
-
+    public void clickSearchTrainsButton() {
+    wait.until(ExpectedConditions.visibilityOf(SearchTrainButton)).click();
+    }
 }

@@ -31,9 +31,12 @@ public class ChangeAdultPassengerSteps {
     }
     @And("I choose date")
     public void iChooseDate()  {
-        //landingPO.clickCalendarIcon();
-        //landingPO.clickNextMonthButton();
         landingPO.selectDate();
+    }
+
+    @And("I click Search trains")
+    public void iSearchTrains()  {
+        landingPO.clickSearchTrainsButton();
     }
 
 
