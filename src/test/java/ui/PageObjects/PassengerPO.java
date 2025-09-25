@@ -18,9 +18,7 @@ public class PassengerPO extends BasePO {
 
     public void enterFullName(String fullName) {
         log.info("Вводим имя пассажира: {}", fullName);
-        wait.until(ExpectedConditions.visibilityOf(fullNameInput));
-        fullNameInput.clear();
-        fullNameInput.sendKeys(fullName);
+        wait.until(ExpectedConditions.elementToBeClickable(fullNameInput)).clear();
         log.debug("Имя пассажира '{}' введено в поле", fullName);
     }
 }
