@@ -28,6 +28,12 @@ dependencies {
     // dotenv
     implementation("io.github.cdimascio:java-dotenv:5.2.2")
 
+    // SLF4J API
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+
+    // Logback — реализация SLF4J
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
+
 }
 
 tasks.test {
