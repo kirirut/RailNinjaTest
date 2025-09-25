@@ -6,7 +6,6 @@ Feature: Changing data on Rail Ninja
     And I click Search trains
     And I choose first train
     And I choose flexible
-    And I click continue
     When I change Adult passenger to "<display_name>"
 
 
