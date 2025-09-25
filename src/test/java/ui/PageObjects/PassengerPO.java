@@ -8,10 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import static ui.StepMethods.Driver.driver;
 import static ui.StepMethods.Driver.wait;
 
-public class PassengerPO {
-    public PassengerPO() {
-        PageFactory.initElements(driver,this);
-    }
+public class PassengerPO extends BasePO {
+
     @FindBy(id = "checkout-passengers-form_passengersCategories_adult_0_full_name")
     public WebElement fullNameInput;
 

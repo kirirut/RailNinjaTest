@@ -13,10 +13,7 @@ import java.util.List;
 import static ui.StepMethods.Driver.driver;
 import static ui.StepMethods.Driver.wait;
 
-public class LandingPO {
-    public LandingPO() {
-        PageFactory.initElements(driver, this);
-    }
+public class LandingPO extends BasePO {
 
     private final String url = "https://rail.ninja/";
 

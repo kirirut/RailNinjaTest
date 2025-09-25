@@ -5,7 +5,6 @@ Feature: Changing data on Rail Ninja
     And I choose date
     And I click Search trains
     And I choose first train
-    And I click continue
     When I change Adult passenger to "<display_name>"
 
 

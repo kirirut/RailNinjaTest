@@ -14,7 +14,7 @@ public class ChangeAdultPassengerSteps {
 
     @Given("I'm on Rail Ninja web page")
     public void iMOnRailwayNinjaWebPage() {
-        landingPO = new LandingPO(); // создаём объект только здесь
+        landingPO = new LandingPO();
         landingPO.openRailwayNinjaWebPage();
     }
 
@@ -43,11 +43,6 @@ public class ChangeAdultPassengerSteps {
     public void iChooseFirstTrain() {
         timetablePO = new TimetablePO();
         timetablePO.selectFirstTrain();
-    }
-
-    @And("I click continue")
-    public void iClickContinue() {
-        timetablePO = new TimetablePO(); // можно переиспользовать тот же объект, но не страшно
         timetablePO.pressContinueButton();
     }
 
