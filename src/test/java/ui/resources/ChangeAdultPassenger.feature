@@ -5,11 +5,30 @@ Feature: Changing data on Rail Ninja
     And I choose date
     And I click Search trains
     And I choose first train
-    And I choose flexible
+    And I click continue
     When I change Adult passenger to "<display_name>"
 
 
 
     Examples:
       | display_name |
-      |   Vadim      |
+      | Vadim        |
+      | Anna         |
+      | Dmitry       |
+      | Elena        |
+      | Alexey       |
+      | Maria        |
+      | Sergey       |
+      | Olga         |
+      | Nikolay      |
+      | Tatiana      |
+      | Ivan         |
+      | Ekaterina    |
+      | Mikhail      |
+      | Yulia        |
+      | Andrey       |
+      | Svetlana     |
+      | Viktor       |
+      | Natalia      |
+      | Pavel        |
+      | Irina        |

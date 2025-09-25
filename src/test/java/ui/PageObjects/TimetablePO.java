@@ -19,6 +19,9 @@ public class TimetablePO {
         switchToNewTab();
         PageFactory.initElements(driver, this);
     }
+    @FindBy(xpath = "//button[.//span[normalize-space()='Continue'] and .//span[normalize-space()='to next step']]")
+    public WebElement continueButton;
+
 
     private void switchToNewTab() {
         List<String> tabs = new ArrayList<>(driver.getWindowHandles());
@@ -36,5 +39,10 @@ public class TimetablePO {
                 .visibilityOfAllElementsLocatedBy(By.xpath("//button[contains(., 'Select Seats')]")));
         WebElement firstButton = wait.until(ExpectedConditions.elementToBeClickable(buttons.get(0)));
         firstButton.click();
+    }
+
+    public void pressContinueButton() {
+        wait.until(ExpectedConditions.elementToBeClickable(continueButton)).click();
+
     }
 }
