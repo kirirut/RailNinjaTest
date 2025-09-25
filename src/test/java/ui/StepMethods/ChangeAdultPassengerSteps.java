@@ -4,17 +4,14 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import ui.PageObjects.LandingPO;
-import ui.PageObjects.TimetablePO;
 
 
 public class ChangeAdultPassengerSteps {
     LandingPO landingPO;
 
-
     @Before
     public void setUp() {
         landingPO = new LandingPO();
-
     }
 
     @Given("I'm on Rail Ninja web page")
@@ -42,19 +39,6 @@ public class ChangeAdultPassengerSteps {
         landingPO.clickSearchTrainsButton();
     }
 
-    @And("I choose first train")
-    public void iChooseFirstTrain()  {
-        TimetablePO timetablePO = new TimetablePO();
-        timetablePO.selectFirstTrain();
-
-    }
-
-    @And("I choose flexible")
-    public void iChooseFlexible()  {
-        TimetablePO timetablePO = new TimetablePO();
-        timetablePO.clickContinueButton();
-
-    }
 
 
 

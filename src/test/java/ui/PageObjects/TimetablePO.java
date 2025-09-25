@@ -1,7 +1,6 @@
 package ui.PageObjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -16,13 +15,10 @@ import static ui.StepMethods.Driver.driver;
 import static ui.StepMethods.Driver.wait;
 
 public class TimetablePO {
-
     public TimetablePO() {
         switchToNewTab();
         PageFactory.initElements(driver, this);
     }
-    @FindBy(xpath = "//button[.//span[normalize-space()='Continue'] and .//span[normalize-space()='to next step']]")
-    public WebElement continueButton;
 
     private void switchToNewTab() {
         List<String> tabs = new ArrayList<>(driver.getWindowHandles());
@@ -40,8 +36,5 @@ public class TimetablePO {
                 .visibilityOfAllElementsLocatedBy(By.xpath("//button[contains(., 'Select Seats')]")));
         WebElement firstButton = wait.until(ExpectedConditions.elementToBeClickable(buttons.get(0)));
         firstButton.click();
-    }
-    public void clickContinueButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(continueButton)).click();
     }
 }
