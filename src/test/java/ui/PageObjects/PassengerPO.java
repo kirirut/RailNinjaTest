@@ -39,6 +39,8 @@ public class PassengerPO extends BasePO {
 
 
 
+
+
     public void enterFullName(String fullName) {
         log.info("Вводим имя пассажира: {}", fullName);
         WebElement input = wait.until(ExpectedConditions.elementToBeClickable(fullNameInput));
