@@ -20,6 +20,8 @@ public class ChangeAdultPassengerSteps {
     TimetablePO timetablePO;
     PassengerPO passengerPO;
 
+
+
     @Given("I'm on Rail Ninja web page")
     @Step("Открываю главную страницу Rail Ninja")
     @Description("Пользователь открывает веб-сайт Rail Ninja")
@@ -65,9 +67,11 @@ public class ChangeAdultPassengerSteps {
     @Step("Меняю данные взрослого пассажира на {fullName}")
     @Story("Изменение данных пассажира")
     public void changeAdultPassengerTo(String fullName) {
+
         passengerPO = new PassengerPO();
         passengerPO.enterFullName(fullName);
         passengerPO.verifyPassengerName(fullName);
+
 
     }
 }

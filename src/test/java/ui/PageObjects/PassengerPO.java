@@ -19,6 +19,24 @@ public class PassengerPO extends BasePO {
     @FindBy(xpath = "//div[contains(@class,'sc-cf59c1f-0')]//span[1]")
     public WebElement passengerName;
 
+    @FindBy(id = "checkout-passengers-form_clientDetails_user_email")
+    public WebElement emailInput;
+
+    @FindBy(css = "input[type='radio'][value='female']")
+    public WebElement femaleRadioButton;
+
+    @FindBy(css = "input[type='radio'][value='male']")
+    public WebElement maleRadioButton;
+
+    @FindBy(id = "checkout-passengers-form_passengersCategories_adult_0_id_number")
+    public WebElement passportNumInput;
+
+    @FindBy(xpath = "//button[span[text()='Clear']]")
+    private WebElement clearButton;
+
+
+
+
 
 
     public void enterFullName(String fullName) {

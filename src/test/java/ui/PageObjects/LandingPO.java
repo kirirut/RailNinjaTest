@@ -71,6 +71,10 @@ public class LandingPO extends BasePO {
                 By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option")));
         suggestion.click();
 
+
+
+
+
         log.debug("Станция прибытия выбрана");
     }
 
