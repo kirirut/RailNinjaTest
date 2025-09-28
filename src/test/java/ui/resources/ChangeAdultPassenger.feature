@@ -9,7 +9,8 @@ Feature: Changing data on Rail Ninja
 
 
 
+
+
     Examples:
       | display_name |
       | Vadim        |
-      | Anna         |

@@ -67,13 +67,9 @@ public class LandingPO extends BasePO {
         arrival.click();
         arrival.clear();
         arrival.sendKeys("Medina");
-
-        List<WebElement> suggestions = wait.until(ExpectedConditions
-                .presenceOfAllElementsLocatedBy(By.cssSelector(
-                        ".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option")));
-
-        WebElement firstSuggestion = wait.until(ExpectedConditions.elementToBeClickable(suggestions.get(0)));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", firstSuggestion);
+        WebElement suggestion = wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option")));
+        suggestion.click();
 
         log.debug("Станция прибытия выбрана");
     }

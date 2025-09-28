@@ -15,7 +15,6 @@ public class PassengerPO extends BasePO {
 
     @FindBy(id = "checkout-passengers-form_passengersCategories_adult_0_full_name")
     public WebElement fullNameInput;
-
     public void enterFullName(String fullName) {
         log.info("Вводим имя пассажира: {}", fullName);
         wait.until(ExpectedConditions.elementToBeClickable(fullNameInput)).clear();
