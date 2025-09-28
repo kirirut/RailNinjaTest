@@ -67,5 +67,7 @@ public class ChangeAdultPassengerSteps {
     public void changeAdultPassengerTo(String fullName) {
         passengerPO = new PassengerPO();
         passengerPO.enterFullName(fullName);
+        passengerPO.verifyPassengerName(fullName);
+
     }
 }
