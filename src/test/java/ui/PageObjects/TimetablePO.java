@@ -33,6 +33,7 @@ public class TimetablePO {
         log.info("Переключились на новую вкладку с URL: {}", driver.getCurrentUrl());
     }
 
+    //https://rail.ninja/v9/trains/order/timetable
     public void selectTrainByIndex(int index) {
         log.info("Выбираем поезд с индексом {}", index);
 

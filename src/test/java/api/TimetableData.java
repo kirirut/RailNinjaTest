@@ -48,12 +48,6 @@ public class TimetableData {
         this.statusCode = response.getStatusCode();
         this.contentType = response.getContentType();
 
-        // Логируем для отладки
-        System.out.println("Status code: " + statusCode);
-        System.out.println("Content type: " + contentType);
-        System.out.println("Body: " + response.asString());
-
-        // Проверяем, что ответ JSON и содержит "trains"
         if (statusCode != 200 || !contentType.contains("application/json")) {
             throw new RuntimeException("Ответ не JSON! Status: " + statusCode);
         }
@@ -73,7 +67,6 @@ public class TimetableData {
     public int getStatusCode() { return statusCode; }
     public String getContentType() { return contentType; }
 
-    // Вспомогательный метод для проверки маршрута
     public boolean validateRoute(String departure, String arrival, String date) {
         return trains.stream().anyMatch(train ->
                 train.getDepartureStation().getSingleName().equals(departure) &&

@@ -9,7 +9,7 @@ public class TimetableDataTest {
     private static final String API_KEY = "4ae3369b0952f1c1176deec94708f3a7";
     private static final String DEPARTURE = "Mecca";
     private static final String ARRIVAL = "Medina";
-    private static final String DATE = "2025-11-05"; // ISO format
+    private static final String DATE = "2025-11-05";
 
     @Test
     public void testTimetablePost() throws Exception {
