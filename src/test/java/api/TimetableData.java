@@ -1,6 +1,6 @@
 package api;
 
-import api.Utils.Train;
+import api.model.Train;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -67,11 +67,4 @@ public class TimetableData {
     public int getStatusCode() { return statusCode; }
     public String getContentType() { return contentType; }
 
-    public boolean validateRoute(String departure, String arrival, String date) {
-        return trains.stream().anyMatch(train ->
-                train.getDepartureStation().getSingleName().equals(departure) &&
-                        train.getArrivalStation().getSingleName().equals(arrival) &&
-                        train.getDepartureDatetime().startsWith(date)
-        );
-    }
 }

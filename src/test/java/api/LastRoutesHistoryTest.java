@@ -1,6 +1,6 @@
 package api;
 
-import api.Utils.SearchHistoryItem;
+import api.model.SearchHistoryItem;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
