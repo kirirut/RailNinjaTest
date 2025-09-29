@@ -12,6 +12,20 @@ Feature: Changing data on Rail Ninja
 
 
     Examples:
-      | display_name    |
-      | Vadim Rutkovsky |
-      | Anna Kosmach    |
+      | display_name      |
+      | Vadim Rutkovsky   |
+      | Anna Kosmach      |
+      | Ivan Petrov       |
+      | Maria Sidorova    |
+      | Alex Johnson      |
+      | Elena Volkova     |
+      | John Smith        |
+      | Olga Ivanova      |
+      | Dmitry Popov      |
+      | Sophia Kuznetsova |
+      | Michael Brown     |
+      | Ekaterina Smirnova|
+      | Sergey Pavlov     |
+      | Laura Martinez    |
+      | Nikolay Orlov     |
+      | Emily Davis       |

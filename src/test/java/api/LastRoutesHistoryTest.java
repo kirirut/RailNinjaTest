@@ -7,7 +7,6 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
 
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
@@ -71,7 +70,6 @@ public class LastRoutesHistoryTest {
         String updatedBase64 = Base64.getEncoder().encodeToString(updatedJson.getBytes(StandardCharsets.UTF_8));
         String urlEncodedCookie = java.net.URLEncoder.encode(updatedBase64, StandardCharsets.UTF_8);
 
-        //System.out.println("Updated cookie: " + urlEncodedCookie);
 
         Response getResponse = given()
                 .cookie("search_history", urlEncodedCookie)
@@ -187,4 +185,52 @@ public class LastRoutesHistoryTest {
         assertTrue(body.contains("[]") || body.contains("error") || body.contains("message"),
                 "Ожидается пустой результат или сообщение об ошибке для некорректных данных");
     }
+    @Test
+    public void lastRoutesHistoryReadOnlyCookie() throws Exception {
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("X-currency", "USD")
+                .header("X-API-User-Key", apiKey)
+                .body(requestBody)
+                .when()
+                .post("https://back.rail.ninja/api/v2/timetable")
+                .then()
+                .extract()
+                .response();
+
+        Map<String, String> cookies = response.getCookies();
+        String searchHistoryEncoded = cookies.get("search_history");
+        if (searchHistoryEncoded == null) return;
+
+        String urlDecoded = java.net.URLDecoder.decode(searchHistoryEncoded, StandardCharsets.UTF_8);
+        byte[] decodedBytes = Base64.getDecoder().decode(urlDecoded);
+        String decodedJson = new String(decodedBytes, StandardCharsets.UTF_8);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<SearchHistoryItem> historyList = mapper.readValue(decodedJson, new TypeReference<>() {});
+
+        SearchHistoryItem first = historyList.get(0);
+        first.legs.get("1").departureStation = "1036";
+        first.legs.get("1").arrivalStation = "1037";
+
+        String updatedJson = mapper.writeValueAsString(historyList);
+        String updatedBase64 = Base64.getEncoder().encodeToString(updatedJson.getBytes(StandardCharsets.UTF_8));
+        String urlEncodedCookie = java.net.URLEncoder.encode(updatedBase64, StandardCharsets.UTF_8);
+
+        Response getResponse = given()
+                .cookie("search_history", urlEncodedCookie)
+                .when()
+                .get("https://back.rail.ninja/api/v1/station/history")
+                .then()
+                .extract()
+                .response();
+
+        assertEquals(200, getResponse.getStatusCode());
+
+        String returnedJson = getResponse.asString();
+        assertTrue(returnedJson.contains("1036") && returnedJson.contains("1037"),
+                "Ожидается, что read-only endpoint вернёт данные без изменений");
+    }
+
 }
