@@ -11,6 +11,10 @@ import io.qameta.allure.Story;
 import ui.PageObjects.LandingPO;
 import ui.PageObjects.PassengerPO;
 import ui.PageObjects.TimetablePO;
+import ui.model.HashArray;
+
+
+import static ui.StepMethods.Driver.driver;
 
 @Epic("Бронирование билетов")
 @Feature("Изменение данных пассажира")
@@ -19,6 +23,8 @@ public class ChangeAdultPassengerSteps {
     LandingPO landingPO;
     TimetablePO timetablePO;
     PassengerPO passengerPO;
+
+
 
 
 
@@ -72,6 +78,11 @@ public class ChangeAdultPassengerSteps {
         passengerPO.enterFullName(fullName);
         passengerPO.verifyPassengerName(fullName);
 
-
+        String currentUrl = driver.getCurrentUrl();
+        String[] segments = currentUrl.split("/");
+        String hash = segments[segments.length - 2];
+        HashArray.hashArray.add(hash);
+        System.out.println("Added hash: " + hash);
     }
+
 }
