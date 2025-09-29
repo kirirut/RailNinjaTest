@@ -7,12 +7,9 @@ Feature: Changing data on Rail Ninja
     And I choose first train
     When I change Adult passenger to "<display_name>"
 
-
-
-
-
     Examples:
       | display_name      |
       | Vadim Rutkovsky   |
       | Anna Kosmach      |
       | Ivan Petrov       |
+

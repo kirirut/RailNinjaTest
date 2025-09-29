@@ -2,6 +2,7 @@ package ui.StepMethods;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
@@ -11,10 +12,8 @@ import io.qameta.allure.Story;
 import ui.PageObjects.LandingPO;
 import ui.PageObjects.PassengerPO;
 import ui.PageObjects.TimetablePO;
-import ui.model.HashArray;
 
-
-import static ui.StepMethods.Driver.driver;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Epic("Бронирование билетов")
 @Feature("Изменение данных пассажира")
@@ -78,11 +77,41 @@ public class ChangeAdultPassengerSteps {
         passengerPO.enterFullName(fullName);
         passengerPO.verifyPassengerName(fullName);
 
-        String currentUrl = driver.getCurrentUrl();
-        String[] segments = currentUrl.split("/");
-        String hash = segments[segments.length - 2];
-        HashArray.hashArray.add(hash);
-        System.out.println("Added hash: " + hash);
     }
+
+    @When("I click continue")
+    public void iClickContinue() {
+
+        passengerPO = new PassengerPO();
+    passengerPO.clickContinue();
+
+    }
+
+    @Then("I should see an error message indicating the form is empty")
+    public void iShouldSeeAnErrorMessageIndicatingTheFormIsEmpty() {
+        PassengerPO passengerPage = new PassengerPO(); // создаём объект страницы
+        boolean isErrorVisible = passengerPage.isErrorIconDisplayed();
+        if (!isErrorVisible) {
+            throw new AssertionError("Error icon is not displayed, but it was expected!");
+        }
+    }
+
+    @When("I fill email and confirm it")
+    public void iFillAllRequiredPassengerFormFieldsWithValidData() {
+        passengerPO = new PassengerPO();
+
+        passengerPO.enterEmail("testuser@example.com");
+        passengerPO.confirmEmail("testuser@example.com");
+
+    }
+
+    @Then("I should see email confirmation message")
+    public void iShouldSeeEmailConfirmationMessage() {
+        boolean isDisplayed = passengerPO.isEmailConfirmationDisplayed();
+        assertTrue(isDisplayed, "Email confirmation message is not displayed");
+    }
+
+
+
 
 }
