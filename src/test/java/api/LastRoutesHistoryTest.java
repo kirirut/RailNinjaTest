@@ -15,9 +15,9 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LastRoutesHistoryTest {
-    String endpoint = "https://back.rail.ninja/api/v2/timetable";
     private static final String apiKey = "4ae3369b0952f1c1176deec94708f3a7";
 
     private final String requestBody = """
@@ -34,7 +34,7 @@ public class LastRoutesHistoryTest {
         """;
 
     @Test
-    public void lastRoutesHistoryWithModifiedCookie() throws Exception {
+    public void lastRoutesHistoryWithModifiedRoute() throws Exception {
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -50,10 +50,8 @@ public class LastRoutesHistoryTest {
 
         Map<String, String> cookies = response.getCookies();
         String searchHistoryEncoded = cookies.get("search_history");
-        //System.out.println("searchHistoryEncoded: " + searchHistoryEncoded);
 
         if (searchHistoryEncoded == null) {
-           // System.out.println("Cookie search_history отсутствует");
             return;
         }
 
@@ -83,10 +81,110 @@ public class LastRoutesHistoryTest {
                 .extract()
                 .response();
 
-        //System.out.println("Status code: " + getResponse.getStatusCode());
-        //System.out.println("Response body: " + getResponse.asString());
+        assertEquals(200, getResponse.getStatusCode());
+    }
+
+    @Test
+    public void lastRoutesHistoryWithModifiedDate() throws Exception {
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("X-currency", "USD")
+                .header("X-API-User-Key", apiKey)
+                .body(requestBody)
+                .when()
+                .post("https://back.rail.ninja/api/v2/timetable")
+                .then()
+                .extract()
+                .response();
+
+        Map<String, String> cookies = response.getCookies();
+        String searchHistoryEncoded = cookies.get("search_history");
+
+        if (searchHistoryEncoded == null) {
+            return;
+        }
+
+        String urlDecoded = java.net.URLDecoder.decode(searchHistoryEncoded, StandardCharsets.UTF_8);
+        byte[] decodedBytes = Base64.getDecoder().decode(urlDecoded);
+        String decodedJson = new String(decodedBytes, StandardCharsets.UTF_8);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<SearchHistoryItem> historyList = mapper.readValue(decodedJson, new TypeReference<>() {});
+
+
+        SearchHistoryItem first = historyList.get(0);
+        first.legs.get("1").departureDate = "08.12.2025";
+
+
+        String updatedJson = mapper.writeValueAsString(historyList);
+        String updatedBase64 = Base64.getEncoder().encodeToString(updatedJson.getBytes(StandardCharsets.UTF_8));
+        String urlEncodedCookie = java.net.URLEncoder.encode(updatedBase64, StandardCharsets.UTF_8);
+
+
+        Response getResponse = given()
+                .cookie("search_history", urlEncodedCookie)
+                .when()
+                .get("https://back.rail.ninja/api/v1/station/history")
+                .then()
+                .extract()
+                .response();
         assertEquals(200, getResponse.getStatusCode());
     }
 
 
+
+    @Test
+    public void lastRoutesHistoryWithInvalidData() throws Exception {
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .header("X-currency", "USD")
+                .header("X-API-User-Key", apiKey)
+                .body(requestBody)
+                .when()
+                .post("https://back.rail.ninja/api/v2/timetable")
+                .then()
+                .extract()
+                .response();
+
+        Map<String, String> cookies = response.getCookies();
+        String searchHistoryEncoded = cookies.get("search_history");
+
+        if (searchHistoryEncoded == null) return;
+
+        String urlDecoded = java.net.URLDecoder.decode(searchHistoryEncoded, StandardCharsets.UTF_8);
+        byte[] decodedBytes = Base64.getDecoder().decode(urlDecoded);
+        String decodedJson = new String(decodedBytes, StandardCharsets.UTF_8);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<SearchHistoryItem> historyList = mapper.readValue(decodedJson, new TypeReference<>() {
+        });
+
+        SearchHistoryItem first = historyList.get(0);
+        first.legs.get("1").departureStation = "null";
+        first.legs.get("1").arrivalStation = "null";
+        first.legs.get("1").departureDate = "08.12.2000";
+
+        String updatedJson = mapper.writeValueAsString(historyList);
+        String updatedBase64 = Base64.getEncoder().encodeToString(updatedJson.getBytes(StandardCharsets.UTF_8));
+        String urlEncodedCookie = java.net.URLEncoder.encode(updatedBase64, StandardCharsets.UTF_8);
+
+        Response getResponse = given()
+                .cookie("search_history", urlEncodedCookie)
+                .when()
+                .get("https://back.rail.ninja/api/v1/station/history")
+                .then()
+                .extract()
+                .response();
+
+        System.out.println("Status code: " + getResponse.getStatusCode());
+        String body = getResponse.asString();
+        System.out.println("Response body: " + body);
+        assertEquals(200, getResponse.getStatusCode());
+        assertTrue(body.contains("[]") || body.contains("error") || body.contains("message"),
+                "Ожидается пустой результат или сообщение об ошибке для некорректных данных");
+    }
 }
