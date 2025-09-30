@@ -129,7 +129,7 @@ public class ChangeAdultPassengerSteps {
     }
 
     @And("I fill over fields")
-    public void iChooseMaleGender() {
+    public void ifillOverFields() {
         passengerPO = new PassengerPO();
         passengerPO.selectMaleGender();
         passengerPO.selectFirstCountry();
