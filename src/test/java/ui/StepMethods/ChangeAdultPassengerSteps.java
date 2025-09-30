@@ -137,8 +137,6 @@ public class ChangeAdultPassengerSteps {
         passengerPO.selectDateOfBirth();
     }
 
-
-
     @Then("I should see the next step page")
     public void iShouldSeeTheNextStepPage() {
         passengerPO = new PassengerPO();
