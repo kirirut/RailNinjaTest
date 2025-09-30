@@ -39,3 +39,15 @@
 ## Затраченное время
 
 * Было затрачено достаточное количество времени,но однозначно можно сказать, что время затраченное на UI превышает время затраченное на API/
+
+## Вдохновлялся
+
+* https://habr.com/ru/articles/726064/
+* https://habr.com/ru/companies/alfa/articles/745854/
+* https://habr.com/p/778376/
+* https://youtu.be/c3V7N0MCm6g?si=Vh7HT9g7KXVKhRUd
+* https://youtu.be/gxzXOMxIt4w?si=T35rc1rz4eG4e9oS
+* https://rest-assured.io/docs
+* https://cucumber.io/docs/cucumber/
+* https://chatgpt.com/
+* https://grok.com/
