@@ -127,4 +127,21 @@ public class ChangeAdultPassengerSteps {
             throw new AssertionError("Email validation message 'Please enter valid email address' is not displayed");
         }
     }
+
+    @And("I fill over fields")
+    public void iChooseMaleGender() {
+        passengerPO = new PassengerPO();
+        passengerPO.selectMaleGender();
+        passengerPO.selectFirstCountry();
+        passengerPO.enterPassportNumber("12121");
+        passengerPO.selectDateOfBirth();
+    }
+
+
+
+    @Then("I should see the next step page")
+    public void iShouldSeeTheNextStepPage() {
+        passengerPO = new PassengerPO();
+        passengerPO.verifyNextStepIsVisible();
+    }
 }

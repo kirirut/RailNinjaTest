@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
+import java.util.List;
 
 import static ui.StepMethods.Driver.driver;
 import static ui.StepMethods.Driver.wait;
@@ -150,8 +151,93 @@ public class PassengerPO extends BasePO {
         }
     }
 
+    public void selectMaleGender() {
+        WebElement maleSpan = driver.findElement(By.xpath("//span[text()='Male']"));
+        ((JavascriptExecutor) driver).executeScript(
+                "arguments[0].scrollIntoView({block: 'center', behavior: 'instant'});", maleSpan);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(maleSpan));
+        maleSpan.click();
 
+        log.debug("Выбран пол: Мужской");
+    }
+    public void selectFirstCountry() {
+        log.info("Выбираем первую страну из списка");
 
+        WebElement countryInput = wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector("input[id*='citizenship']")));
+        countryInput.click();
 
+        countryInput.sendKeys("");
 
+        WebElement firstOption = wait.until(ExpectedConditions.elementToBeClickable(
+                By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option")));
+        firstOption.click();
+
+        log.debug("Выбрана первая страна из списка");
+
+    }
+
+    public void enterPassportNumber(String passportNumber) {
+        log.info("Вводим номер паспорта: {}", passportNumber);
+        WebElement input = wait.until(ExpectedConditions.elementToBeClickable(passportNumInput));
+        input.clear();
+        input.sendKeys(passportNumber);
+        log.debug("Номер паспорта успешно введен: {}", passportNumber);
+    }
+    public void selectDateOfBirth() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        try {
+
+            WebElement dobContainer = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.id("checkout-passengers-form_passengersCategories_adult_0_dob")
+            ));
+            List<WebElement> selectors = dobContainer.findElements(By.cssSelector(".ant-select-selector"));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block:'center'});", selectors.get(0));
+            selectors.get(0).click();
+            WebElement firstDay = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option:first-child")));
+            firstDay.click();
+            Thread.sleep(1000);
+            selectors.get(1).click();
+            WebElement firstMonth = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option:first-child")));
+            firstMonth.click();
+            Thread.sleep(1000);
+            selectors.get(2).click();
+            WebElement firstYear = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.cssSelector(".ant-select-dropdown:not(.ant-select-dropdown-hidden) .ant-select-item-option:first-child")));
+            firstYear.click();
+            Thread.sleep(1000);
+
+            log.debug("Дата рождения выбрана (первые доступные значения)");
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void verifyNextStepIsVisible() {
+        WebElement paymentNotice = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("span.sc-73484146-2.iGnbyc")
+        ));
+
+        if (!paymentNotice.isDisplayed()) {
+            throw new AssertionError("Следующий шаг/страница не отображается: сообщение о выборе способа оплаты не найдено");
+        }
+
+        log.debug("Следующий шаг формы виден: сообщение о выборе способа оплаты");
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
