@@ -1,5 +1,5 @@
-Feature: Fill form and clear it
-  Scenario Outline: Check if clear button works correctly
+Feature: Fill form and press continue
+  Scenario Outline: Check if filled form works correctly
     Given I'm on Rail Ninja web page
     And I choose route
     And I choose date
