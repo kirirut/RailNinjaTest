@@ -112,6 +112,19 @@ public class ChangeAdultPassengerSteps {
     }
 
 
+    @When("I fill email")
+    public void iFillEmail() {
+        passengerPO = new PassengerPO();
+        passengerPO.enterEmail("1234");
+    }
 
+    @Then("I should see email validation message")
+    public void iShouldSeeEmailValidationMessage() {
+         passengerPO = new PassengerPO();
+        boolean isErrorDisplayed = passengerPO.isEmailValidationErrorDisplayed();
 
+        if (!isErrorDisplayed) {
+            throw new AssertionError("Email validation message 'Please enter valid email address' is not displayed");
+        }
+    }
 }

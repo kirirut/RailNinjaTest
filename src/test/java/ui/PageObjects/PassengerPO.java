@@ -58,6 +58,9 @@ public class PassengerPO extends BasePO {
     @FindBy(xpath = "//span[contains(text(),'Email for receiving e-tickets')]")
     private WebElement emailConfirmationMessage;
 
+    @FindBy(className = "ant-form-item-explain-error")
+    private WebElement emailErrorMessage;
+
 
 
     @FindBy(css = "svg[viewBox='0 0 24 24']")
@@ -109,21 +112,40 @@ public class PassengerPO extends BasePO {
         WebElement input = wait.until(ExpectedConditions.elementToBeClickable(emailInput));
         input.clear();
         input.sendKeys(email);
+        confirmEmailInput.sendKeys(email);
     }
 
     public void confirmEmail(String email) {
         WebElement input = wait.until(ExpectedConditions.elementToBeClickable(confirmEmailInput));
         input.clear();
         input.sendKeys(email);
+        input.sendKeys(Keys.ENTER);
     }
 
     public boolean isEmailConfirmationDisplayed() {
         try {
-            // ждём появления блока подтверждения
             wait.withTimeout(Duration.ofSeconds(10))
                     .until(ExpectedConditions.visibilityOf(emailConfirmationMessage));
             return true;
         } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public boolean isEmailValidationErrorDisplayed() {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            WebElement errorElement = wait.until(ExpectedConditions.visibilityOf(emailErrorMessage));
+            String errorText = errorElement.getText().trim();
+            boolean isErrorPresent = errorText.equals("Please enter valid email address");
+            if (isErrorPresent) {
+                log.info("Ошибка валидации email обнаружена: {}", errorText);
+            } else {
+                log.debug("Текст ошибки не совпадает: ожидалось 'Please enter valid email address', получено '{}'", errorText);
+            }
+            return isErrorPresent;
+        } catch (TimeoutException | NoSuchElementException e) {
+            log.debug("Ошибка валидации email не обнаружена");
             return false;
         }
     }

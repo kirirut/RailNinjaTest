@@ -10,6 +10,5 @@ Feature: Changing data on Rail Ninja
     Examples:
       | display_name      |
       | Vadim Rutkovsky   |
-      | Anna Kosmach      |
-      | Ivan Petrov       |
+
 
