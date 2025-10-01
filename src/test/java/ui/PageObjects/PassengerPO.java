@@ -18,43 +18,21 @@ public class PassengerPO extends BasePO {
     private static final Logger log = LoggerFactory.getLogger(PassengerPO.class);
 
     @FindBy(id = "checkout-passengers-form_passengersCategories_adult_0_full_name")
-    public WebElement fullNameInput;
+    private WebElement fullNameInput;
 
     @FindBy(xpath = "//div[contains(@class,'sc-cf59c1f-0')]//span[1]")
-    public WebElement passengerName;
+    private WebElement passengerName;
 
-    // Email
+
     @FindBy(id = "checkout-passengers-form_clientDetails_user_email")
-    public WebElement emailInput;
+    private WebElement emailInput;
 
-    // Confirm Email
+
     @FindBy(id = "checkout-passengers-form_clientDetails_confirm_user_email")
-    public WebElement confirmEmailInput;
+    private WebElement confirmEmailInput;
 
-    // Пол
-    @FindBy(css = "input[type='radio'][value='female']")
-    public WebElement femaleRadioButton;
-
-    @FindBy(css = "input[type='radio'][value='male']")
-    public WebElement maleRadioButton;
-
-    // Паспорт
     @FindBy(id = "checkout-passengers-form_passengersCategories_adult_0_id_number")
-    public WebElement passportNumInput;
-
-    // Дата рождения (3 dropdown'а)
-    @FindBy(id = "rc_select_7")
-    public WebElement birthDaySelect;
-
-    @FindBy(id = "rc_select_8")
-    public WebElement birthMonthSelect;
-
-    @FindBy(id = "rc_select_9")
-    public WebElement birthYearSelect;
-
-
-    @FindBy(xpath = "//button[span[text()='Clear']]")
-    private WebElement clearButton;
+    private WebElement passportNumInput;
 
     @FindBy(xpath = "//span[contains(text(),'Email for receiving e-tickets')]")
     private WebElement emailConfirmationMessage;

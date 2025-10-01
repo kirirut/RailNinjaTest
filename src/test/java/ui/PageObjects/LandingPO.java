@@ -21,22 +21,22 @@ public class LandingPO extends BasePO {
     private final String url = "https://rail.ninja/";
 
     @FindBy(css = "button.cf2Lf6.cf8Oa")
-    public WebElement acceptAllCookiesButton;
+    private WebElement acceptAllCookiesButton;
 
     @FindBy(how = How.CSS, using = "input[aria-owns='departure_station_list']")
-    public WebElement departureStationInput;
+    private WebElement departureStationInput;
 
     @FindBy(how = How.CSS, using = "input[aria-owns='arrival_station_list']")
-    public WebElement arrivalStationInput;
+    private WebElement arrivalStationInput;
 
     @FindBy(how = How.XPATH, using = "//div[contains(@class, 'kqKZPS')]")
-    public WebElement calendarIcon;
+    private WebElement calendarIcon;
 
     @FindBy(how = How.XPATH, using = "//button[contains(@class, 'next')]")
-    public WebElement nextMonthButton;
+    private WebElement nextMonthButton;
 
     @FindBy(css = "button[form='search-form-rn-modern'][type='submit']")
-    public WebElement searchTrainButton;
+    private WebElement searchTrainButton;
 
 
     public void openRailwayNinjaWebPage() {

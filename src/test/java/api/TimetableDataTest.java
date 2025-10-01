@@ -24,10 +24,10 @@ public class TimetableDataTest {
             assertNotNull(train.getDepartureStation(), "DepartureStation не должен быть null");
             assertNotNull(train.getArrivalStation(), "ArrivalStation не должен быть null");
             assertNotNull(train.getDepartureDatetime(), "DepartureDatetime не должен быть null");
-            System.out.println("Рейс:");
-            System.out.println("  departure_station.single_name = " + train.getDepartureStation().getSingleName());
-            System.out.println("  arrival_station.single_name   = " + train.getArrivalStation().getSingleName());
-            System.out.println("  departure_date               = " + train.getDepartureDatetime().substring(0, 10));
+            //System.out.println("Рейс:");
+            //System.out.println("  departure_station.single_name = " + train.getDepartureStation().getSingleName());
+            //System.out.println("  arrival_station.single_name   = " + train.getArrivalStation().getSingleName());
+            //System.out.println("  departure_date               = " + train.getDepartureDatetime().substring(0, 10));
             assertTrue(train.getDepartureStation().getSingleName().contains(DEPARTURE),
                     "Станция отправления не совпадает");
             assertTrue(train.getArrivalStation().getSingleName().contains(ARRIVAL),
